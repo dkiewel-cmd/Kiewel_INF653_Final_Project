@@ -20,13 +20,13 @@ app.use(logger);
 app.use(cors(corsOptions));
 
 // built-in middleware to handle urlencoded form data
-app.use(express.urlencoded({ extended: true }));
+//app.use(express.urlencoded({ extended: true }));
 
 // built-in middleware for json
-app.use(express.json());
+//app.use(express.json());
 
 // serve static files
-app.use('/', express.static(path.join(__dirname, '/public')));
+//app.use('/', express.static(path.join(__dirname, '/public')));
 
 // routes
 app.use('/', require('./routes/root'));

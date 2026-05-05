@@ -164,3 +164,7 @@
 20260506	08:02:18	46992908-3267-4e97-b8e3-80488c8c9b77	GET	undefined	/states
 20260506	08:02:27	574d1bc6-bb08-45ee-a10a-3670a212f5a6	GET	undefined	/
 20260506	08:02:27	2e01b296-c659-4d54-a44c-ece33e6cdfe4	GET	undefined	/css/style.css
+20260506	08:07:37	807f7447-4e2b-4aa6-b75c-d8e46ff06916	GET	undefined	/
+20260506	08:07:37	7b766d93-2df9-4324-8b0c-fc3e836c83c9	GET	undefined	/css/style.css
+20260506	08:07:56	0ccb88fd-a0be-4b7f-8065-6763e83dce5d	GET	undefined	/css/style.css
+20260506	08:07:56	92797fb4-dad4-4507-b237-e76ed77dda80	GET	undefined	/.well-known/appspecific/com.chrome.devtools.json
