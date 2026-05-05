@@ -25,16 +25,12 @@ app.use(cors(corsOptions));
 // built-in middleware for json
 //app.use(express.json());
 
-// serve static files
-app.use('/', express.static(path.join(__dirname, '/public')));
-
-app.get('/', (req, res) =>{
-    res.status(200).send('<h1>Welcome to the Home Page</h1>');
-});
-
 // routes
 app.use('/', require('./routes/root'));
 app.use('/states', require('./routes/api/states'));
+
+// serve static files
+app.use('/', express.static(path.join(__dirname, '/public')));
 
 // catch-all
 app.all(/.*/, (req, res) => {
