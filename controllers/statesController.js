@@ -1,3 +1,4 @@
+const State = require('../model/State');
 const data = {
     states: require('../model/statesData.json')
     //setFunFact: function (data) {[ this.funfact = data ]}
