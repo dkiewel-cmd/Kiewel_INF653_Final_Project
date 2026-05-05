@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 //app.use(express.urlencoded({ extended: true }));
 
 // built-in middleware for json
-app.use(express.json());
+//app.use(express.json());
 
 // serve static files
 app.use('/', express.static(path.join(__dirname, '/public')));
