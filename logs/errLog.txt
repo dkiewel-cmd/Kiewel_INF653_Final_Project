@@ -1,1 +1,9 @@
 20260505	10:44:12	ce17fa98-f4ce-4900-8835-f7aad654ef8f	TypeError: fsPromises.readFil is not a function
+20260505	12:33:58	df1ae927-761a-4ab2-8b46-8f37c3216e7d	Error: Not allowed by CORS
+20260505	13:55:05	aeb21198-58f2-4cea-8664-c3e41e7a8a90	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
+20260505	13:56:15	ab5bf993-85bc-4018-a3f1-f3d086a0a60e	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
+20260505	13:56:30	54a3d375-cec0-4843-93f5-713079ac59f8	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
+20260505	13:57:23	be888ae4-a1c8-4034-b0d8-0503c6f0b87d	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
+20260505	13:57:52	69601ae0-3331-4e40-8b4e-508373c56ddd	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
+20260505	13:59:18	87cefe35-3185-40ca-8dfe-7e694f60ae1d	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
+20260505	14:01:51	a2267c49-103d-4c7a-8f17-3626e261dfe2	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
