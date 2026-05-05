@@ -33,7 +33,7 @@ app.use('/', require('./routes/root'));
 app.use('/states', require('./routes/api/states'));
 
 // catch-all
-app.all(/.*/, (req, res) => {
+app.all('*', (req, res) => {
     res.status(404);
     if (req.accepts('html')) {
         res.sendFile(path.join(__dirname, 'views', '404.html'));
