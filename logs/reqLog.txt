@@ -191,3 +191,9 @@
 20260506	08:41:12	f899f4ec-61ad-4211-9c4c-1defea49cc58	GET	undefined	/css/style.css
 20260506	08:41:14	4d1ab998-8feb-45a1-b2f8-fd9f0964325e	GET	undefined	/
 20260506	08:41:14	3d4256a5-72df-4fd4-a9c6-6cfa3dc4c6be	GET	undefined	/css/style.css
+20260506	08:45:25	db49e6b9-d0cc-4abc-9219-abff8a0388ca	GET	undefined	/
+20260506	08:45:37	42f5a7f5-143d-4a34-ae43-89ab29fd0e63	GET	undefined	/index.html
+20260506	08:45:37	fcac6e2f-542c-462d-b763-04cffac9adde	GET	undefined	/css/style.css
+20260506	08:45:45	db84af56-a824-4bed-a0da-c3ecaeba030d	GET	undefined	/index
+20260506	08:45:45	12eb4073-818e-421a-9fb8-101f0eda7aad	GET	undefined	/index
+20260506	08:45:45	fc1a97b7-273c-4631-a024-c86259ae1813	GET	undefined	/css/style.css

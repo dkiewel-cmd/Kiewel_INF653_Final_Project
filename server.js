@@ -28,7 +28,9 @@ app.use(cors(corsOptions));
 // serve static files
 app.use('/', express.static(path.join(__dirname, '/public')));
 
-app.get('/', require('./routes/root'));
+app.get('/', (req, res) =>{
+    res.status(200).send('<h1>Welcome to the Home Page</h1>');
+});
 
 // routes
 app.use('/', require('./routes/root'));
