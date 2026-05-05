@@ -26,7 +26,9 @@ app.use(cors(corsOptions));
 //app.use(express.json());
 
 // serve static files
-//app.use('/', express.static(path.join(__dirname, '/public')));
+app.use('/', express.static(path.join(__dirname, '/public')));
+
+app.get('/', require('./routes/root'));
 
 // routes
 app.use('/', require('./routes/root'));
