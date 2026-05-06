@@ -7,3 +7,15 @@
 20260505	13:57:52	69601ae0-3331-4e40-8b4e-508373c56ddd	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
 20260505	13:59:18	87cefe35-3185-40ca-8dfe-7e694f60ae1d	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
 20260505	14:01:51	a2267c49-103d-4c7a-8f17-3626e261dfe2	Error: ENOENT: no such file or directory, stat 'C:\Users\dpkie\OneDrive\Documents\FHSU\INF 653 Back End Web Development\Final Project\Final Project\data\statesData.json'
+20260506	10:20:25	9ceee6e4-4757-41d6-b17a-973493b934f8	ObjectParameterError: Parameter "filter" to find() must be an object, got "code" (type string)
+20260506	10:20:25	3867b1cd-358a-40ca-b961-d1542d3bd875	ObjectParameterError: Parameter "filter" to find() must be an object, got "code" (type string)
+20260506	10:20:31	b7076cfe-c51b-4df4-b782-14c1bba38afe	ObjectParameterError: Parameter "filter" to find() must be an object, got "code" (type string)
+20260506	10:21:26	21a67b2f-c261-405a-910a-73e48d11a108	ObjectParameterError: Parameter "filter" to find() must be an object, got "KS,AL" (type object)
+20260506	10:21:51	2166739a-3224-479a-a878-0260899497b6	ObjectParameterError: Parameter "filter" to findOne() must be an object, got "KS,AL" (type object)
+20260506	10:21:56	9107e19d-6d5d-4bb7-bf7e-4cab598587b0	ObjectParameterError: Parameter "filter" to findOne() must be an object, got "KS,AL" (type object)
+20260506	10:22:17	72fdaa12-89a9-4172-84f6-b7a80f4f8b65	ObjectParameterError: Parameter "filter" to findOne() must be an object, got "KS,AL" (type object)
+20260506	10:22:19	7a0f3b7c-a358-4d46-b2cd-7360f37cbbae	ObjectParameterError: Parameter "filter" to findOne() must be an object, got "KS,AL" (type object)
+20260506	10:29:54	044fd7a2-3216-4002-a4c7-800b5360fcab	TypeError: Cannot read properties of undefined (reading 'toUpperCase')
+20260506	10:32:35	106ef59f-f3a1-4154-9887-4c3128af1aed	TypeError: Cannot read properties of undefined (reading 'toUpperCase')
+20260506	10:35:26	8e9c0ea3-8c9b-4674-8eb9-7401c755ffea	ReferenceError: statesData is not defined
+20260506	10:36:51	2a879a58-57ce-47ea-9851-b29d6a0ad58c	ReferenceError: statesData is not defined
