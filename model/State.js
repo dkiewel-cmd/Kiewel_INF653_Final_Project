@@ -2,73 +2,70 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const stateSchema = new Schema({
-    /*"state": {
+    state: {
         type: String,
         required: true
     },
-    "slug": {
+    slug: {
         type: String,
         required: true
-    },*/
+    },
     code: {
         type: String,
         required: true,
         unique: true
-    },/*
-    "nickname": {
+    },
+    nickname: {
         type: String,
         required: true
     },
-    "website": {
+    website: {
         type: String
     },
-    "admission_date": {
+    admission_date: {
         type: String,
         required: true
     },
-    "admission_number": {
+    admission_number: {
         type: Number
     },
-    "capital_city": {
+    capital_city: {
         type: String,
         required: true
     },
-    "capital_url": {
+    capital_url: {
         type: String
     },
-    "population": {
+    population: {
         type: Number,
         required: true
     },
-    "population_rank": {
+    population_rank: {
         type: Number
     },
-    "constitution_url": {
+    constitution_url: {
         type: String
     },
-    "state_flag_url": {
+    state_flag_url: {
         type: String
     },
-    "state_seal_url": {
+    state_seal_url: {
         type: String
     },
-    "map_image_url": {
+    map_image_url: {
         type: String
     },
-    "landscape_background_url": {
+    landscape_background_url: {
         type: String
     },
-    "skyline_background_url": {
+    skyline_background_url: {
         type: String
     },
-    "twitter_url": {
+    twitter_url: {
         type: String
     },
-    "facebook_url": {
+    facebook_url: {
         type: String
-    },*/
-    funfacts: {
-        type: Array,
     }
 });
 
