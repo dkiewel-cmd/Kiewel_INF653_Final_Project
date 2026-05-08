@@ -80,26 +80,30 @@ const getRandomFunFact = async (req, res) => {
 
 const addFunFact = async (req, res) => {
     try {
-        const stateCode = req.params.code.toUpperCase();
-        const { funfact } = req.body;
+        const stateCode = req.params.state?.toUpperCase();
+        
+        if (!req.body || !req.body.funfacts) {
+            return res.status(400).json({ "message": "State fun facts value required" });
+        }
 
-        if (!funfact) {
-            return res.status(400).json({ "message": "State fun fact value required" });
+        if (!Array.isArray(req.body.funfacts)) {
+            return res.status(400).json({ "message": "State fun facts value must be an array" });
         }
 
         const updatedState = await State.findOneAndUpdate(
             { code: stateCode },
-            { $push: { funfacts: funfact } },
-            { new: true }
+            { $push: { funfacts: { $each: req.body.funfacts } } },
+            { new: true, upsert: true } 
         );
 
         if (!updatedState) {
-            return res.status(404).json({ "message": "State not found " });
+            return res.status(404).json({ "message": "State not found" });
         }
 
         res.json(updatedState);
+
     } catch (err) {
-        res.status(500).json({ "message": error.message });
+        res.status(500).json({ "message": err.message });
     }
 };
 
