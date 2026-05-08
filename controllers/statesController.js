@@ -1,30 +1,55 @@
 const State = require('../model/State');
-const data = {
-    states: require('../model/statesData.json')
-};
+const data = require('../model/statesData.json');
 
 const getAllStates = async (req, res) => {
-    const { contig } = req.query;
-    let results = data.states;
-    const nonContig = ['AK', 'HI'];
+    try {
+        const mongoStates = await State.find();
 
-    if (contig === 'true') {
-        results = results.filter(s => !nonContig.includes(s.code));
-    } else if (contig === 'false') {
-        results = results.filter(s => nonContig.includes(s.code));
+        let results = statesData.map(jsonState => {
+            const mongoData = mongoStates.find(ms => ms.code === jsonState.code);
+
+            if (mongoData && mongoData.funfacts) {
+                return { ...jsonState, funfacts: mongoData.funfacts };
+            }
+            return jsonState;
+        });
+
+        const { contig } = req.query;
+        const nonContig = ['AK', 'HI'];
+
+        if (contig === 'true') {
+            results = results.filter(s => !nonContig.includes(s.code));
+        } else if (contig === 'false') {
+            results = results.filter(s => nonContig.includes(s.code));
+        }
+
+        res.json(results);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-
-    res.json(results);
 };
 
 const getState = async (req, res) => {
     const stateCode = req.params.code.toUpperCase();
-    const state = data.states.find(s => s.code === stateCode);
+    const jsonState = statesData.find(s => s.code === stateCode);
 
-    if (state) {
-        res.json(state);
-    } else {
-        return res.status(400).send({ "message": "Invalid state abbreviation parameter"});
+    if (!jsonState) {
+        return res.status(400).json({ "message": "Invalid state abbreviation parameter"});
+    }
+
+    try {
+        const mongoState = await State.findOne({ code: stateCode });
+
+        if (mongoState && mongoState.funfacts) {
+            return res.json({
+                ...jsonState,
+                funfacts: mongoState.funfacts
+            });
+        }
+
+        res.json(jsonState);
+    } catch (err) {
+        res.status(500).json({ "message": err.message });
     }
 };
 
@@ -78,4 +103,57 @@ const addFunFact = async (req, res) => {
     }
 };
 
-module.exports = { getAllStates, getState, getRandomFunFact, addFunFact };
+const getStateCapital = async (req, res) => {
+    const stateCode = req.params.code.toUpperCase();
+    const jsonState = statesData.find(s => s.code === stateCode);
+
+    if (!jsonState) {
+        return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
+    }
+
+    res.json({ "state": jsonState.state, "capital": jsonState.capital_city });
+};
+
+const getStateNickname = async (req, res) => {
+    const stateCode = req.params.code.toUpperCase();
+    const jsonState = statesData.find(s => s.code === stateCode);
+
+    if (!jsonState) {
+        return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
+    }
+
+    res.json({ "state": jsonState.state, "nickname": jsonState.nickname });
+};
+
+const getStatePopulation = async (req, res) => {
+    const stateCode = req.params.code.toUpperCase();
+    const jsonState = statesData.find(s => s.code === stateCode);
+
+    if (!jsonState) {
+        return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
+    }
+
+    res.json({ "state": jsonState.state, "population": jsonState.population.toLocaleString() });
+};
+
+const getStateAdmission = async (req, res) => {
+    const stateCode = req.params.code.toUpperCase();
+    const jsonState = statesData.find(s => s.code === stateCode);
+
+    if (!jsonState) {
+        return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
+    }
+
+    res.json({ "state": jsonState.state, "admitted": jsonState.admission_date });
+};
+
+module.exports = {
+    getAllStates,
+    getState,
+    getRandomFunFact,
+    addFunFact,
+    getStateCapital,
+    getStateNickname,
+    getStatePopulation,
+    getStateAdmission
+};

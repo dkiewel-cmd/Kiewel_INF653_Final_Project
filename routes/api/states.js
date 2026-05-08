@@ -12,4 +12,16 @@ router.route('/:code/funfact')
     .get(statesController.getRandomFunFact)
     .post(statesController.addFunFact);
 
+router.route('/:code/capital')
+    .get(statesController.getStateCapital);
+
+router.route('/:code/nickname')
+    .get(statesController.getStateNickname);
+
+router.route('/:code/population')
+    .get(statesController.getStatePopulation);
+
+router.route('/:code/admission')
+    .get(statesController.getStateAdmission);
+
 module.exports = router;
