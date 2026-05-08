@@ -20,7 +20,7 @@ app.use(logger);
 app.use(cors(corsOptions));
 
 // built-in middleware to handle urlencoded form data
-//app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // built-in middleware for json
 app.use(express.json());
@@ -28,7 +28,6 @@ app.use(express.json());
 // routes
 app.use('/', require('./routes/root'));
 app.use('/states', require('./routes/api/states'));
-app.use('/states/', require('./routes/api/states'));
 
 // serve static files
 app.use('/', express.static(path.join(__dirname, '/public')));

@@ -1,7 +1,7 @@
 const State = require('../model/State');
 const statesData = require('../model/statesData.json');
 
-const getAllStates = async (req, res) => {
+const getAllStates = async (req, res, next) => {
     try {
         const mongoStates = await State.find();
 
@@ -25,11 +25,11 @@ const getAllStates = async (req, res) => {
 
         res.json(results);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        next(err);
     }
 };
 
-const getState = async (req, res) => {
+const getState = async (req, res, next) => {
     const stateCode = req.params.code.toUpperCase();
     const jsonState = statesData.find(s => s.code === stateCode);
 
@@ -49,11 +49,11 @@ const getState = async (req, res) => {
 
         res.json(jsonState);
     } catch (err) {
-        res.status(500).json({ "message": err.message });
+        next(err);
     }
 };
 
-const getRandomFunFact = async (req, res) => {
+const getRandomFunFact = async (req, res, next) => {
     const stateCode = req.params.code?.toUpperCase();
     const jsonState = statesData.find(s => s.code === stateCode);
 
@@ -74,11 +74,11 @@ const getRandomFunFact = async (req, res) => {
         res.json({ "funfact": randomFact });
 
     } catch (err) {
-        res.status(500).json({ "message": err.message });
+        next(err);
     }
 };
 
-const addFunFact = async (req, res) => {
+const addFunFact = async (req, res, next) => {
     try {
         const stateCode = req.params.code?.toUpperCase();
 
@@ -103,11 +103,11 @@ const addFunFact = async (req, res) => {
         res.status(201).json(result);
 
     } catch (err) {
-        res.status(500).json({ "message": err.message });
+        next(err);
     }
 };
 
-const updateFunFact = async (req, res) => {
+const updateFunFact = async (req, res, next) => {
     const stateCode = req.params.code?.toUpperCase();
     const { index, funfact } = req.body;
 
@@ -138,11 +138,11 @@ const updateFunFact = async (req, res) => {
 
         res.json(result);
     } catch (err) {
-        res.status(500).json({ "message": err.message });
+        next(err);
     }
 };
 
-const deleteFunFact = async (req, res) => {
+const deleteFunFact = async (req, res, next) => {
     const stateCode = req.params.code?.toUpperCase();
     const stateName = req.params.state;
     const { index } = req.body;
@@ -176,7 +176,7 @@ const deleteFunFact = async (req, res) => {
         res.json(result);
 
     } catch (err) {
-        res.status(500).json({ "message": err.message });
+        next(err);
     }
 };
 
