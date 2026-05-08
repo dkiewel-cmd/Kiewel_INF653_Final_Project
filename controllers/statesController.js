@@ -83,11 +83,11 @@ const addFunFact = async (req, res) => {
         const stateCode = req.params.state?.toUpperCase();
 
         if (!req.body?.funfacts) {
-            return res.status(400).json({ "message": "State fun facts value required" });
+            return res.status(400).json({ "message": "State fun facts value required." });
         }
 
         if (!Array.isArray(req.body.funfacts) || req.body.funfacts.length === 0) {
-            return res.status(400).json({ "message": "State fun facts value must be an array"});
+            return res.status(400).json({ "message": "State fun facts value must be an array."});
         }
 
         let state = await State.findOne({ code: stateCode });
