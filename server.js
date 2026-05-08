@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 //app.use(express.urlencoded({ extended: true }));
 
 // built-in middleware for json
-//app.use(express.json());
+app.use(express.json());
 
 // routes
 app.use('/', require('./routes/root'));

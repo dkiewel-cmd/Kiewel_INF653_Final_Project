@@ -3,42 +3,34 @@ const Schema = mongoose.Schema;
 
 const stateSchema = new Schema({
     state: {
-        type: String,
-        required: true
+        type: String
     },
     slug: {
-        type: String,
-        required: true
+        type: String
     },
     code: {
-        type: String,
-        required: true,
-        unique: true
+        type: String
     },
     nickname: {
-        type: String,
-        required: true
+        type: String
     },
     website: {
         type: String
     },
     admission_date: {
-        type: String,
-        required: true
+        type: String
     },
     admission_number: {
         type: Number
     },
     capital_city: {
-        type: String,
-        required: true
+        type: String
     },
     capital_url: {
         type: String
     },
     population: {
-        type: Number,
-        required: true
+        type: Number
     },
     population_rank: {
         type: Number
@@ -66,7 +58,22 @@ const stateSchema = new Schema({
     },
     facebook_url: {
         type: String
+    },
+    funfacts: {
+        type: [String],
+        default: undefined
     }
+});
+
+stateSchema.pre('save', function(next) {
+    if (this.isNew) {
+        if (!this.funfacts) {
+            this.funfacts = [];
+        } else if (!Array.isArray(this.funfacts)) {
+            this.funfacts = [this.funfacts];
+        }
+    }
+    next();
 });
 
 module.exports = mongoose.model('State', stateSchema);

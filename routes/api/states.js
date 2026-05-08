@@ -8,4 +8,8 @@ router.route('/')
 router.route('/:code')
     .get(statesController.getState);
 
+router.route('/:code/funfact')
+    .get(statesController.getRandomFunFact)
+    .post(statesController.addFunFact);
+
 module.exports = router;
