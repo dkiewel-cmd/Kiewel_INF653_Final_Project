@@ -65,7 +65,7 @@ const stateSchema = new Schema({
     }
 });
 
-stateSchema.pre('save', function(next) {
+stateSchema.pre('save', function() {
     if (this.isNew) {
         if (!this.funfacts) {
             this.funfacts = [];
@@ -73,7 +73,6 @@ stateSchema.pre('save', function(next) {
             this.funfacts = [this.funfacts];
         }
     }
-    next();
 });
 
 module.exports = mongoose.model('State', stateSchema);
