@@ -10,7 +10,9 @@ router.route('/:code')
 
 router.route('/:code/funfact')
     .get(statesController.getRandomFunFact)
-    .post(statesController.addFunFact);
+    .post(statesController.addFunFact)
+    .patch(statesController.updateFunFact)
+    .delete(statesController.deleteFunFact);
 
 router.route('/:code/capital')
     .get(statesController.getStateCapital);
