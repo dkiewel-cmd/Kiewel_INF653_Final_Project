@@ -54,25 +54,25 @@ const getState = async (req, res) => {
 };
 
 const getRandomFunFact = async (req, res) => {
+    const stateCode = req.params.state?.toUpperCase();
+    const jsonState = statesData.find(s => s.code === stateCode);
+
+    if (!jsonState) {
+        return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
+    }
+
     try {
-        const stateCode = req.params.code.toUpperCase();
-        const state = await State.findOne({ code: stateCode });
-        const stateName = req.params.state;
+        const mongoState = await State.findOne({ code: stateCode });
 
-        if (!state) {
-            return res.status(404).json({ "message": "State not found" });
-        }
-
-        if (!state.funfacts || state.funfacts.length === 0) {
-            return res.status(404).json({
-                "message": `No Fun Facts found for ${stateName}`
+        if (!mongoState || !mongoState.funfacts || mongoState.funfacts.length === 0) {
+            return res.status(404).json({ 
+                "message": `No Fun Facts found for ${jsonState.state}` 
             });
         }
 
-        const randomIndex = Math.floor(Math.random() * state.funfacts.length);
-        const randomFact = state.funfacts[randomIndex];
-
+        const randomFact = mongoState.funfacts[Math.floor(Math.random() * mongoState.funfacts.length)];
         res.json({ "funfact": randomFact });
+
     } catch (err) {
         res.status(500).json({ "message": err.message });
     }
