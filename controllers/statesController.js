@@ -80,7 +80,7 @@ const getRandomFunFact = async (req, res) => {
 
 const addFunFact = async (req, res) => {
     try {
-        const stateCode = req.params.state?.toUpperCase();
+        const stateCode = req.params.code?.toUpperCase();
 
         if (!req.body?.funfacts) {
             return res.status(400).json({ "message": "State fun facts value required." });
