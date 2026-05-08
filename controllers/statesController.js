@@ -152,17 +152,14 @@ const getStateAdmission = async (req, res) => {
 };
 
 const updateFunFact = async (req, res) => {
-    const { index, funfact } = req.body;
     const stateCode = req.params.state?.toUpperCase();
+    const { index, funfact } = req.body;
 
-    if (!funfact || typeof funfact !== 'string') {
-        return res.status(400).json({ "message": "State fun fact value required" });
-    }
+    if (!index) return res.status(400).json({ "message": "State fun fact index value required" });
+    if (!funfact) return res.status(400).json({ "message": "State fun fact value required" });
 
     const jsonState = statesData.find(s => s.code === stateCode);
-    if (!jsonState) {
-        return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
-    }
+    if (!jsonState) return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
 
     try {
         const state = await State.findOne({ code: stateCode });
@@ -171,34 +168,23 @@ const updateFunFact = async (req, res) => {
             return res.status(404).json({ "message": `No Fun Facts found for ${jsonState.state}` });
         }
 
-        let updateOperation;
-
-        if (index) {
-            const arrayIndex = index - 1;
-            
-            if (arrayIndex < 0 || arrayIndex >= state.funfacts.length) {
-                return res.status(404).json({ 
-                    "message": `No Fun Fact found at that index for ${jsonState.state}` 
-                });
-            }
-            
-            updateOperation = { $set: { [`funfacts.${arrayIndex}`]: funfact } };
-        } else {
-            updateOperation = { $push: { funfacts: funfact } };
+        const arrayIndex = index - 1;
+        if (arrayIndex < 0 || arrayIndex >= state.funfacts.length) {
+            return res.status(404).json({ "message": `No Fun Fact found at that index for ${jsonState.state}` });
         }
+
+        const updateKey = `funfacts.${arrayIndex}`;
         const result = await State.findOneAndUpdate(
             { code: stateCode },
-            updateOperation,
-            { new: true }
+            { $set: { [updateKey]: funfact } },
+            { new: true } 
         );
 
         res.json(result);
-
     } catch (err) {
         res.status(500).json({ "message": err.message });
     }
 };
-
 
 const deleteFunFact = async (req, res) => {
     const stateCode = req.params.state?.toUpperCase();
