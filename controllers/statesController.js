@@ -54,7 +54,7 @@ const getState = async (req, res) => {
 };
 
 const getRandomFunFact = async (req, res) => {
-    const stateCode = req.params.state?.toUpperCase();
+    const stateCode = req.params.code?.toUpperCase();
     const jsonState = statesData.find(s => s.code === stateCode);
 
     if (!jsonState) {
@@ -105,7 +105,80 @@ const addFunFact = async (req, res) => {
     } catch (err) {
         res.status(500).json({ "message": err.message });
     }
-}
+};
+
+const updateFunFact = async (req, res) => {
+    const stateCode = req.params.code?.toUpperCase();
+    const { index, funfact } = req.body;
+
+    if (!index) return res.status(400).json({ "message": "State fun fact index value required" });
+    if (!funfact) return res.status(400).json({ "message": "State fun fact value required" });
+
+    const jsonState = statesData.find(s => s.code === stateCode);
+    if (!jsonState) return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
+
+    try {
+        const state = await State.findOne({ code: stateCode });
+
+        if (!state || !state.funfacts || state.funfacts.length === 0) {
+            return res.status(404).json({ "message": `No Fun Facts found for ${jsonState.state}` });
+        }
+
+        const arrayIndex = index - 1;
+        if (arrayIndex < 0 || arrayIndex >= state.funfacts.length) {
+            return res.status(404).json({ "message": `No Fun Fact found at that index for ${jsonState.state}` });
+        }
+
+        const updateKey = `funfacts.${arrayIndex}`;
+        const result = await State.findOneAndUpdate(
+            { code: stateCode },
+            { $set: { [updateKey]: funfact } },
+            { new: true } 
+        );
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ "message": err.message });
+    }
+};
+
+const deleteFunFact = async (req, res) => {
+    const stateCode = req.params.code?.toUpperCase();
+    const stateName = req.params.state;
+    const { index } = req.body;
+
+    if (!index) {
+        return res.status(400).json({ "message": "State fun fact index value required" });
+    }
+
+    try {
+        const mongoState = await State.findOne({ code: stateCode });
+        const jsonState = statesData.find(s => s.code === stateCode);
+        const jsonName = statesData.find(n => n.state === stateName);
+
+        if (!mongoState || !mongoState.funfacts || mongoState.funfacts.length === 0) {
+            return res.status(404).json({ 
+                "message": `No Fun Facts found for ${jsonName.state}` 
+            });
+        }
+
+        const arrayIndex = index - 1;
+        if (mongoState.funfacts[arrayIndex] === undefined) {
+            return res.status(404).json({ 
+                "message": `No Fun Fact found at that index for ${jsonName.state}` 
+            });
+        }
+
+        mongoState.funfacts.splice(arrayIndex, 1);
+        
+        const result = await mongoState.save();
+
+        res.json(result);
+
+    } catch (err) {
+        res.status(500).json({ "message": err.message });
+    }
+};
 
 const getStateCapital = async (req, res) => {
     const stateCode = req.params.code.toUpperCase();
@@ -151,86 +224,15 @@ const getStateAdmission = async (req, res) => {
     res.json({ "state": jsonState.state, "admitted": jsonState.admission_date });
 };
 
-const updateFunFact = async (req, res) => {
-    const stateCode = req.params.state?.toUpperCase();
-    const { index, funfact } = req.body;
-
-    if (!index) return res.status(400).json({ "message": "State fun fact index value required" });
-    if (!funfact) return res.status(400).json({ "message": "State fun fact value required" });
-
-    const jsonState = statesData.find(s => s.code === stateCode);
-    if (!jsonState) return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
-
-    try {
-        const state = await State.findOne({ code: stateCode });
-
-        if (!state || !state.funfacts || state.funfacts.length === 0) {
-            return res.status(404).json({ "message": `No Fun Facts found for ${jsonState.state}` });
-        }
-
-        const arrayIndex = index - 1;
-        if (arrayIndex < 0 || arrayIndex >= state.funfacts.length) {
-            return res.status(404).json({ "message": `No Fun Fact found at that index for ${jsonState.state}` });
-        }
-
-        const updateKey = `funfacts.${arrayIndex}`;
-        const result = await State.findOneAndUpdate(
-            { code: stateCode },
-            { $set: { [updateKey]: funfact } },
-            { new: true } 
-        );
-
-        res.json(result);
-    } catch (err) {
-        res.status(500).json({ "message": err.message });
-    }
-};
-
-const deleteFunFact = async (req, res) => {
-    const stateCode = req.params.state?.toUpperCase();
-    const { index } = req.body;
-
-    if (!index) {
-        return res.status(400).json({ "message": "State fun fact index value required" });
-    }
-
-    try {
-        const mongoState = await State.findOne({ code: stateCode });
-        const jsonState = statesData.find(s => s.code === stateCode);
-
-        if (!mongoState || !mongoState.funfacts || mongoState.funfacts.length === 0) {
-            return res.status(404).json({ 
-                "message": `No Fun Facts found for ${jsonState.state}` 
-            });
-        }
-
-        const arrayIndex = index - 1;
-        if (mongoState.funfacts[arrayIndex] === undefined) {
-            return res.status(404).json({ 
-                "message": `No Fun Fact found at that index for ${jsonState.state}` 
-            });
-        }
-
-        mongoState.funfacts.splice(arrayIndex, 1);
-        
-        const result = await mongoState.save();
-
-        res.json(result);
-
-    } catch (err) {
-        res.status(500).json({ "message": err.message });
-    }
-};
-
 module.exports = {
     getAllStates,
     getState,
     getRandomFunFact,
     addFunFact,
+    updateFunFact,
+    deleteFunFact,
     getStateCapital,
     getStateNickname,
     getStatePopulation,
-    getStateAdmission,
-    updateFunFact,
-    deleteFunFact
+    getStateAdmission
 };
