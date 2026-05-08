@@ -19,8 +19,8 @@ const logEvents = async (message, logName) => {
     }
 }
 
-const logger = (req, res, next) => {
-    logEvents(`${req.method}\t${req.headers.origin}\t${req.url}`, 'reqLog.txt');
+const logger = async (req, res, next) => {
+    await logEvents(`${req.method}\t${req.headers.origin}\t${req.url}`, 'reqLog.txt');
     console.log(`${req.method} ${req.path}`);
     next();
 }

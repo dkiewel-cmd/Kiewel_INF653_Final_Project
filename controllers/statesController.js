@@ -79,6 +79,11 @@ const getRandomFunFact = async (req, res, next) => {
 };
 
 const addFunFact = async (req, res, next) => {
+    console.log({
+        hasReq: !!req,
+        hasRes: !!res,
+        typeOfNext: typeof next
+    });
     try {
         const stateCode = req.params.code?.toUpperCase();
 

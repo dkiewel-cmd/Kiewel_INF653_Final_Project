@@ -29,3 +29,8 @@
 20260508	14:09:27	0dbeb7ba-a4c9-4bb2-a0ec-00e7f192ca87	ReferenceError: error is not defined
 20260508	14:10:57	bda72529-6289-410d-a26e-7d5dd4edb340	ReferenceError: error is not defined
 20260509	06:33:56	ecf86ce2-c364-49ef-80a5-16a7c0368f07	Error: Cannot set headers after they are sent to the client
+20260509	08:08:49	bbe826b8-eedd-46e3-aa81-0a224e2dfe43	TypeError: next is not a function
+20260509	08:13:13	b2c688ba-188e-4fe9-a833-e9e17fcffdd1	TypeError: next is not a function
+20260509	08:27:18	b8238108-d329-4a07-8c36-1ad46197deb4	TypeError: next is not a function
+20260509	08:28:15	670f75ef-1b44-42f2-9d7b-96431055e1c8	TypeError: next is not a function
+20260509	08:34:11	2cfea571-ba02-4423-bea1-aedb66961700	TypeError: next is not a function
