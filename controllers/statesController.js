@@ -3,7 +3,7 @@ const data = {
     states: require('../model/statesData.json')
 };
 
-const getAllStates = (req, res) => {
+const getAllStates = async (req, res) => {
     const { contig } = req.query;
     let results = data.states;
     const nonContig = ['AK', 'HI'];
