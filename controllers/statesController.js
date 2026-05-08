@@ -155,36 +155,32 @@ const updateFunFact = async (req, res) => {
     const stateCode = req.params.state?.toUpperCase();
     const { index, funfact } = req.body;
 
-    if (!index) {
-        return res.status(400).json({ "message": "State fun fact index value required" });
-    }
+    if (!index) return res.status(400).json({ "message": "State fun fact index value required" });
+    if (!funfact) return res.status(400).json({ "message": "State fun fact value required" });
 
-    if (!funfact || typeof funfact !== 'string') {
-        return res.status(400).json({ "message": "State fun fact value required" });
-    }
+    const jsonState = statesData.find(s => s.code === stateCode);
+    if (!jsonState) return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
 
     try {
-        const mongoState = await State.findOne({ code: stateCode });
-        const jsonState = statesData.find(s => s.code === stateCode);
+        const state = await State.findOne({ code: stateCode });
 
-        if (!mongoState || !mongoState.funfacts || mongoState.funfacts.length === 0) {
-            return res.status(404).json({ 
-                "message": `No Fun Facts found for ${jsonState.state}` 
-            });
+        if (!state || !state.funfacts || state.funfacts.length === 0) {
+            return res.status(404).json({ "message": `No Fun Facts found for ${jsonState.state}` });
         }
 
-        const arrayIndex = index - 1; 
-        if (!mongoState.funfacts[arrayIndex]) {
-            return res.status(404).json({ 
-                "message": `No Fun Fact found at that index for ${jsonState.state}` 
-            });
+        const arrayIndex = index - 1;
+        if (arrayIndex < 0 || arrayIndex >= state.funfacts.length) {
+            return res.status(404).json({ "message": `No Fun Fact found at that index for ${jsonState.state}` });
         }
 
-        mongoState.funfacts[arrayIndex] = funfact;
-        const result = await mongoState.save();
+        const updateKey = `funfacts.${arrayIndex}`;
+        const result = await State.findOneAndUpdate(
+            { code: stateCode },
+            { $set: { [updateKey]: funfact } },
+            { new: true } 
+        );
 
         res.json(result);
-
     } catch (err) {
         res.status(500).json({ "message": err.message });
     }
