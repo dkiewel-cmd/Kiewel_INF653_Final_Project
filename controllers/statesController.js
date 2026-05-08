@@ -1,5 +1,5 @@
 const State = require('../model/State');
-const data = require('../model/statesData.json');
+const statesData = require('../model/statesData.json');
 
 const getAllStates = async (req, res) => {
     try {
