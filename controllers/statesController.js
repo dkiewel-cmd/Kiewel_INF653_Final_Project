@@ -108,39 +108,40 @@ const addFunFact = async (req, res, next) => {
 };
 
 const updateFunFact = async (req, res, next) => {
-    const stateCode = req.params.code?.toUpperCase();
-    const { index, funfact } = req.body;
-
-    if (!index) return res.status(400).json({ "message": "State fun fact index value required" });
-    if (!funfact) return res.status(400).json({ "message": "State fun fact value required" });
-
-    const jsonState = statesData.find(s => s.code === stateCode);
-    if (!jsonState) return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
-
     try {
+        const stateCode = req.params.code?.toUpperCase();
+        const { index, funfact } = req.body;
+
+        if (!index) {
+            return res.status(400).json({ "message": "State fun fact index value required" });
+        }
+        if (!funfact) {
+            return res.status(400).json({ "message": "State fun fact value required" });
+        }
+
+        const jsonState = statesData.find(s => s.code === stateCode);
+        if (!jsonState) {
+            return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
+        }
+
         const state = await State.findOne({ code: stateCode });
 
-        if (!state || !state.funfacts || state.funfacts.length === 0) {
+        const arrayIndex = index - 1;
+
+        if (!state || !state.funfacts || state.funfacts[arrayIndex] === undefined) {
             return res.status(404).json({ "message": `No Fun Facts found for ${jsonState.state}` });
         }
 
-        const arrayIndex = index - 1;
-        if (arrayIndex < 0 || arrayIndex >= state.funfacts.length) {
-            return res.status(404).json({ "message": `No Fun Fact found at that index for ${jsonState.state}` });
-        }
+        state.funfacts[arrayIndex] = funfact;
 
-        const updateKey = `funfacts.${arrayIndex}`;
-        const result = await State.findOneAndUpdate(
-            { code: stateCode },
-            { $set: { [updateKey]: funfact } },
-            { new: true } 
-        );
-
+        const result = await state.save();
         res.json(result);
+
     } catch (err) {
         next(err);
     }
 };
+
 
 const deleteFunFact = async (req, res, next) => {
     const stateCode = req.params.code?.toUpperCase();
