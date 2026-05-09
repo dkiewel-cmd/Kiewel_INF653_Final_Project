@@ -126,14 +126,16 @@ const updateFunFact = async (req, res, next) => {
 
         const state = await State.findOne({ code: stateCode });
 
-        const arrayIndex = index - 1;
-
-        if (!state || !state.funfacts || state.funfacts[arrayIndex] === undefined) {
+        if (!state || !state.funfacts || state.funfacts.length === 0) {
             return res.status(404).json({ "message": `No Fun Facts found for ${jsonState.state}` });
         }
 
-        state.funfacts[arrayIndex] = funfact;
+        const arrayIndex = index - 1;
+        if (state.funfacts[arrayIndex] === undefined) {
+            return res.status(404).json({ "message": `No Fun Fact found at that index for ${jsonState.state}` });
+        }
 
+        state.funfacts[arrayIndex] = funfact;
         const result = await state.save();
         res.json(result);
 
