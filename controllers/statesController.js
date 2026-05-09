@@ -6,9 +6,9 @@ const getAllStates = async (req, res, next) => {
         const mongoStates = await State.find();
 
         let results = statesData.map(jsonState => {
-            const mongoData = mongoStates.find(ms => ms.stateCode === jsonState.code);
+            const mongoData = mongoStates.find(ms => ms.stateCode === jsonState.code)?.toObject();
 
-            if (mongoData && mongoData.funfacts !== undefined) {
+            if (mongoData && Object.prototype.hasOwnProperty.call(mongoData, 'funfacts')) {
                 return { ...jsonState, funfacts: mongoData.funfacts };
             }
             return jsonState;
@@ -38,9 +38,9 @@ const getState = async (req, res, next) => {
             return res.status(400).json({ "message": "Invalid state abbreviation parameter"});
         }
     
-        const mongoState = await State.findOne({ stateCode: codeParam });
+        const mongoState = await State.findOne({ stateCode: codeParam }).lean();
 
-        if (mongoState && mongoState.funfacts !== undefined) {
+        if (mongoState && Object.prototype.hasOwnProperty.call(mongoState, 'funfacts')) {
             return res.json({
                 ...jsonState,
                 funfacts: mongoState.funfacts
