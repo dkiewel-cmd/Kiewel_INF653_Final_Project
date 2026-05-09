@@ -8,7 +8,7 @@ const getAllStates = async (req, res, next) => {
         let results = statesData.map(jsonState => {
             const mongoData = mongoStates.find(ms => ms.code === jsonState.code);
 
-            if (mongoData && mongoData.funfacts) {
+            if (mongoData && mongoData.funfacts && mongoData.funfacts.length > 0) {
                 return { ...jsonState, funfacts: mongoData.funfacts };
             }
             return jsonState;
@@ -30,17 +30,17 @@ const getAllStates = async (req, res, next) => {
 };
 
 const getState = async (req, res, next) => {
-    const stateCode = req.params.code.toUpperCase();
-    const jsonState = statesData.find(s => s.code === stateCode);
-
-    if (!jsonState) {
-        return res.status(400).json({ "message": "Invalid state abbreviation parameter"});
-    }
-
     try {
+        const stateCode = req.params.code.toUpperCase();
+        const jsonState = statesData.find(s => s.code === stateCode);
+
+        if (!jsonState) {
+            return res.status(400).json({ "message": "Invalid state abbreviation parameter"});
+        }
+    
         const mongoState = await State.findOne({ code: stateCode });
 
-        if (mongoState && mongoState.funfacts) {
+        if (mongoState && mongoState.funfacts && mongoState.funfacts.length > 0) {
             return res.json({
                 ...jsonState,
                 funfacts: mongoState.funfacts
