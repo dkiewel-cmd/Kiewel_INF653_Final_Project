@@ -7,7 +7,7 @@ const whitelist = [
 
 const corsOptions = {
     origin: '*',
-    methods: "GET,PUT,POST,PATCH,POST,DELETE",
+    methods: "GET,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 200
 }
 

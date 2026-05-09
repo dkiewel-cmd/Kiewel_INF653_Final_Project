@@ -20,9 +20,15 @@ const logEvents = async (message, logName) => {
 }
 
 const logger = async (req, res, next) => {
-    await logEvents(`${req.method}\t${req.headers.origin}\t${req.url}`, 'reqLog.txt');
-    console.log(`${req.method} ${req.path}`);
-    next();
+    try {
+        await logEvents(`${req.method}\t${req.headers.origin}\t${req.url}`, 'reqLog.txt');
+    } catch (err) {
+        console.error("Logging failed, but continuing request:", err);
+    } finally {
+        console.log(`${req.method} ${req.path}`);
+        next();
+    }
+        
 }
 
 module.exports = { logger, logEvents };
