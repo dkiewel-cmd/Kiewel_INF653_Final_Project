@@ -31,14 +31,14 @@ const getAllStates = async (req, res, next) => {
 
 const getState = async (req, res, next) => {
     try {
-        const stateCode = req.params.code.toUpperCase();
-        const jsonState = statesData.find(s => s.code === stateCode);
+        const codeParam = req.params.code.toUpperCase();
+        const jsonState = statesData.find(s => s.code === codeParam);
 
         if (!jsonState) {
             return res.status(400).json({ "message": "Invalid state abbreviation parameter"});
         }
     
-        const mongoState = await State.findOne({ code: stateCode });
+        const mongoState = await State.findOne({ stateCode: codeParam });
 
         if (mongoState && mongoState.funfacts && mongoState.funfacts.length > 0) {
             return res.json({
@@ -54,15 +54,15 @@ const getState = async (req, res, next) => {
 };
 
 const getRandomFunFact = async (req, res, next) => {
-    const stateCode = req.params.code?.toUpperCase();
-    const jsonState = statesData.find(s => s.code === stateCode);
+    const codeParam = req.params.code?.toUpperCase();
+    const jsonState = statesData.find(s => s.code === codeParam);
 
     if (!jsonState) {
         return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
     }
 
     try {
-        const mongoState = await State.findOne({ code: stateCode });
+        const mongoState = await State.findOne({ stateCode: codeParam });
 
         if (!mongoState || !mongoState.funfacts || mongoState.funfacts.length === 0) {
             return res.status(404).json({ 
