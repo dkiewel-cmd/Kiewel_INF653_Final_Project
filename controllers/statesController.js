@@ -40,7 +40,7 @@ const getState = async (req, res, next) => {
     
         const mongoState = await State.findOne({ stateCode: codeParam });
 
-        if (mongoState && mongoState.funfacts && mongoState.funfacts.length > 0) {
+        if (mongoState && mongoState.funfacts && mongoState.funfacts.length >= 0) {
             return res.json({
                 ...jsonState,
                 funfacts: mongoState.funfacts
