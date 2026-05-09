@@ -80,7 +80,7 @@ const getRandomFunFact = async (req, res, next) => {
 
 const addFunFact = async (req, res, next) => {
     try {
-        const stateCode = req.params.code?.toUpperCase();
+        const codeParam = req.params.code?.toUpperCase();
 
         if (!req.body?.funfacts) {
             return res.status(400).json({ "message": "State fun facts value required" });
@@ -90,17 +90,22 @@ const addFunFact = async (req, res, next) => {
             return res.status(400).json({ "message": "State fun facts value must be an array"});
         }
 
-        const state = await State.findOne({ code: stateCode });
+        const state = await State.findOne({ stateCode: codeParam });
 
         if (!state) {
-            return res.status(404).json({ "message": `No state found with code ${stateCode}` });
+            return res.status(404).json({ "message": `No state found with code ${codeParam}` });
         }
         
         state.funfacts = state.funfacts || [];
         state.funfacts.push(...req.body.funfacts);
 
         const result = await state.save();
-        res.status(201).json(result);
+        res.status(201).json({
+            _id: result._id,
+            stateCode: result.stateCode,
+            funfacst: result.funfacts,
+            __v: result.__v
+        });
 
     } catch (err) {
         next(err);
@@ -109,7 +114,7 @@ const addFunFact = async (req, res, next) => {
 
 const updateFunFact = async (req, res, next) => {
     try {
-        const stateCode = req.params.code?.toUpperCase();
+        const codeParam = req.params.code?.toUpperCase();
         const { index, funfact } = req.body;
 
         if (!index) {
@@ -119,12 +124,12 @@ const updateFunFact = async (req, res, next) => {
             return res.status(400).json({ "message": "State fun fact value required" });
         }
 
-        const jsonState = statesData.find(s => s.code === stateCode);
+        const jsonState = statesData.find(s => s.code === codeParam);
         if (!jsonState) {
             return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
         }
 
-        const state = await State.findOne({ code: stateCode });
+        const state = await State.findOne({ stateCode: codeParam });
 
         if (!state || !state.funfacts || state.funfacts.length === 0) {
             return res.status(404).json({ "message": `No Fun Facts found for ${jsonState.state}` });
@@ -137,7 +142,12 @@ const updateFunFact = async (req, res, next) => {
 
         state.funfacts[arrayIndex] = funfact;
         const result = await state.save();
-        res.json(result);
+        res.json({
+            _id: result._id,
+            stateCode: result.stateCode,
+            funfacts: result.funfacts,
+            __v: result.__v
+        });
 
     } catch (err) {
         next(err);
@@ -146,19 +156,19 @@ const updateFunFact = async (req, res, next) => {
 
 const deleteFunFact = async (req, res, next) => {
     try {
-        const stateCode = req.params.code?.toUpperCase();
+        const codeParam = req.params.code?.toUpperCase();
         const { index } = req.body;
 
         if (!index) {
             return res.status(400).json({ "message": "State fun fact index value required" });
         }
 
-        const jsonState = statesData.find(s => s.code === stateCode);
+        const jsonState = statesData.find(s => s.code === codeParam);
         if (!jsonState) {
             return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
         }
 
-        const state = await State.findOne({ code: stateCode });
+        const state = await State.findOne({ stateCode: codeParam });
 
         if (!state || !state.funfacts || state.funfacts.length === 0) {
             return res.status(404).json({ "message": `No Fun Facts found for ${jsonState.state}` });
@@ -172,7 +182,12 @@ const deleteFunFact = async (req, res, next) => {
         state.funfacts.splice(arrayIndex, 1);
 
         const result = await state.save();
-        res.json(result);
+        res.json({
+            _id: result._id,
+            stateCode: result.stateCode,
+            funfacts: result.funfacts,
+            __v: result.__v
+        });
 
     } catch (err) {
         next(err);
