@@ -358,3 +358,5 @@
 20260509	12:50:51	89f501e6-cd2b-44ef-bf01-3883def4f5fc	POST	undefined	/states/OK/funfact
 20260509	12:52:39	a64fdeca-d9cb-47ae-b9af-d0fe76cd28c7	POST	undefined	/states/MO/funfact
 20260509	12:54:09	6909d8f7-d2d4-4534-a451-37438d7dab39	POST	undefined	/states/CO/funfact
+20260509	13:12:21	58c8b13a-1f32-4b12-9548-0c4d46fd252b	POST	undefined	/states/RI/funfact
+20260509	13:12:48	fe244e91-305d-499a-8510-76d3a01afacd	POST	undefined	/states/RI/funfact
