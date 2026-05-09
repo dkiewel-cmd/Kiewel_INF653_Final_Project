@@ -6,7 +6,7 @@ const getAllStates = async (req, res, next) => {
         const mongoStates = await State.find();
 
         let results = statesData.map(jsonState => {
-            const mongoData = mongoStates.find(ms => ms.code === jsonState.code);
+            const mongoData = mongoStates.find(ms => ms.stateCode === jsonState.code);
 
             if (mongoData && mongoData.funfacts && mongoData.funfacts.length > 0) {
                 return { ...jsonState, funfacts: mongoData.funfacts };
@@ -103,7 +103,7 @@ const addFunFact = async (req, res, next) => {
         res.status(201).json({
             _id: result._id,
             stateCode: result.stateCode,
-            funfacst: result.funfacts,
+            funfacts: result.funfacts,
             __v: result.__v
         });
 
