@@ -144,38 +144,34 @@ const updateFunFact = async (req, res, next) => {
     }
 };
 
-
 const deleteFunFact = async (req, res, next) => {
-    const stateCode = req.params.code?.toUpperCase();
-    const stateName = req.params.state;
-    const { index } = req.body;
-
-    if (!index) {
-        return res.status(400).json({ "message": "State fun fact index value required" });
-    }
-
     try {
-        const mongoState = await State.findOne({ code: stateCode });
-        const jsonState = statesData.find(s => s.code === stateCode);
-        const jsonName = statesData.find(n => n.state === stateName);
+        const stateCode = req.params.code?.toUpperCase();
+        const { index } = req.body;
 
-        if (!mongoState || !mongoState.funfacts || mongoState.funfacts.length === 0) {
-            return res.status(404).json({ 
-                "message": `No Fun Facts found for ${jsonName.state}` 
-            });
+        if (!index) {
+            return res.status(400).json({ "message": "State fun fact index value required" });
+        }
+
+        const jsonState = statesData.find(s => s.code === stateCode);
+        if (!jsonState) {
+            return res.status(400).json({ "message": "Invalid state abbreviation parameter" });
+        }
+
+        const state = await State.findOne({ code: stateCode });
+
+        if (!state || !state.funfacts || state.funfacts.length === 0) {
+            return res.status(404).json({ "message": `No Fun Facts found for ${jsonState.state}` });
         }
 
         const arrayIndex = index - 1;
-        if (mongoState.funfacts[arrayIndex] === undefined) {
-            return res.status(404).json({ 
-                "message": `No Fun Fact found at that index for ${jsonName.state}` 
-            });
+        if (state.funfacts[arrayIndex] === undefined) {
+            return res.status(404).json({ "message": `No Fun Fact found at that index for ${jsonState.state}` });
         }
 
-        mongoState.funfacts.splice(arrayIndex, 1);
-        
-        const result = await mongoState.save();
+        state.funfacts.splice(arrayIndex, 1);
 
+        const result = await state.save();
         res.json(result);
 
     } catch (err) {
